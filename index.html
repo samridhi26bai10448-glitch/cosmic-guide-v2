@@ -1,0 +1,308 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Cosmic Guide | Smart Skywatching</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/astronomy-engine/astronomy.browser.min.js"></script>
+  <script src="script.js" defer></script>
+  <script src="sky-map.js" defer></script>
+</head>
+
+<body>
+  <header class="navbar">
+    <a class="brand" href="#">✦ Cosmic Guide</a>
+    <span class="status">YOUR PERSONAL SKY ASSISTANT</span>
+  </header>
+
+  <main>
+    <!-- Hero and location search -->
+    <section class="hero">
+      <p class="eyebrow">LOOK UP. DISCOVER MORE.</p>
+
+      <h1>
+        The universe is<br>
+        closer than you think<span>.</span>
+      </h1>
+
+      <p class="intro">
+        Discover tonight's sky, check the weather, and find
+        the best time to explore the stars.
+      </p>
+
+      <div class="location-tools">
+        <button id="locationBtn">⌖ Use my location</button>
+
+        <div class="city-search">
+          <input
+            id="cityInput"
+            type="text"
+            placeholder="Enter a city, e.g. Udaipur"
+            aria-label="Enter your city"
+          >
+          <button id="cityBtn">Search city</button>
+        </div>
+      </div>
+
+      <p id="locationStatus" class="muted" aria-live="polite">
+        Use your location or search for a city.
+      </p>
+    </section>
+
+    <!-- Weather and stargazing conditions -->
+    <section class="section">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">YOUR NIGHTLY OUTLOOK</p>
+          <h2>Sky conditions</h2>
+        </div>
+
+        <span class="pill">LIVE WEATHER</span>
+      </div>
+
+      <div class="cards">
+        <article class="card">
+          <span class="card-icon">☁</span>
+          <p class="card-label">Cloud cover</p>
+          <h3 id="cloudValue">—</h3>
+          <p id="cloudNote" class="muted">
+            Waiting for your location
+          </p>
+        </article>
+
+        <article class="card">
+          <span class="card-icon">🌡</span>
+          <p class="card-label">Temperature</p>
+          <h3 id="tempValue">—</h3>
+          <p id="tempNote" class="muted">
+            Current local weather
+          </p>
+        </article>
+
+        <article class="card">
+          <span class="card-icon">✦</span>
+          <p class="card-label">Stargazing outlook</p>
+          <h3 id="skyValue">Not checked</h3>
+          <p id="skyNote" class="muted">
+            Check conditions first
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Moon, planets and constellation learning guide -->
+    <section class="section" id="tonightsSky">
+      <p class="eyebrow">YOUR NIGHTLY GUIDE</p>
+      <h2>Tonight's Sky 🌌</h2>
+
+      <p class="muted">
+        Explore celestial objects and discover what to look for.
+      </p>
+
+      <div class="cards">
+        <article class="card">
+          <span class="object-icon">🌙</span>
+          <h3>The Moon</h3>
+
+          <div class="moon-visual">
+  <div id="moonImage" class="moon-image" aria-label="Current Moon phase"></div>
+
+  <div class="moon-details">
+    <h3 id="moonPhaseName">Calculating Moon phase...</h3>
+    <p id="moonInfo" class="muted">
+      Loading Moon information...
+    </p>
+    <p id="moonIllumination" class="muted"></p>
+  </div>
+</div>
+        </article>
+
+        <article class="card">
+          <span class="object-icon">🪐</span>
+          <h3>Planets</h3>
+
+          
+<div id="planetInfo" class="planet-grid">
+  <p class="muted">
+    Use your location or search for a city to calculate
+    planet rise and set times.
+  </p>
+</div>
+</article>
+
+
+        <article class="card constellation-guide">
+          <span class="object-icon">✨</span>
+          <h3>Learn to Find Constellations</h3>
+
+          <p class="muted">
+            Never looked at a constellation before? Start here!
+          </p>
+
+          <h4>1. Find a dark spot</h4>
+          <p>
+            Choose a safe outdoor place away from bright lights.
+            Give your eyes 15–20 minutes to adjust to the darkness.
+          </p>
+
+          <h4>2. Look for a familiar pattern</h4>
+          <p>
+            Start with the Big Dipper, a group of seven bright
+            stars shaped a little like a ladle. It is part of
+            Ursa Major, but its visibility depends on your location.
+          </p>
+
+          <h4>3. Connect the stars</h4>
+          <p>
+            Imagine lines between the brighter stars to recognise
+            a pattern. These lines are guides; they are not
+            actually drawn in the sky.
+          </p>
+
+          <h4>4. Match the sky</h4>
+          <p>
+            Use a star map set to your location and current time.
+            Compare its star patterns with the real sky.
+          </p>
+
+          <h4>5. Be patient</h4>
+          <p>
+            Clouds, moonlight and city lights can hide faint stars.
+            Start with one pattern at a time, and never look
+            directly at the Sun.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Dynamic constellation results -->
+    <section class="section" id="visibleConstellations">
+      <p class="eyebrow">YOUR CURRENT NIGHT SKY</p>
+      <h2>Visible in Your Sky ✨</h2>
+
+      <p class="muted">
+        Discover which constellations may be above your horizon
+        at your selected location and time.
+      </p>
+
+      <div id="constellationResults" class="cards">
+        <article class="card">
+          <span class="object-icon">🌠</span>
+          <h3>Find your constellations</h3>
+
+          <p class="muted">
+            Use your location or search for a city to discover
+            constellations that may be visible in your sky.
+          </p>
+        </article>
+      </div>
+
+      <p id="constellationStatus" class="muted"
+         role="status" aria-live="polite">
+        Waiting for your location.
+      </p>
+
+      <p class="muted">
+        A constellation above the horizon is not necessarily
+        visible to the naked eye. Clouds, daylight, light
+        pollution and the constellation's height all matter.
+      </p>
+    </section>
+
+    <!-- Interactive Sky Map -->
+    <section class="section" id="interactiveSkyMap">
+      <p class="eyebrow">EXPLORE THE NIGHT SKY</p>
+      <h2>Interactive Sky Map 🔭</h2>
+
+      <p class="muted">
+        Explore star patterns, zoom into the sky, and move
+        around the map. Search for a city above to update
+        your observing location.
+      </p>
+
+      <div class="sky-map-toolbar">
+        <button id="zoomOutBtn" type="button"
+          aria-label="Zoom out">−</button>
+
+        <span id="zoomLevel" aria-live="polite">Zoom: 1×</span>
+
+        <button id="zoomInBtn" type="button"
+          aria-label="Zoom in">+</button>
+
+        <button id="resetSkyMapBtn" type="button">
+          Reset view
+        </button>
+      </div>
+
+      <div id="skyMapContainer" class="sky-map-container">
+        <canvas
+          id="skyMapCanvas"
+          role="img"
+          aria-label="Interactive star map. Use the zoom buttons or drag to explore."
+        ></canvas>
+      </div>
+
+      <p id="skyMapStatus" class="muted"
+        role="status" aria-live="polite">
+        Sky map is waiting to be initialised.
+      </p>
+
+      <p class="muted">
+        This educational map will use selected stars and simplified
+        patterns. Actual sky visibility depends on your location
+        and the time of observation.
+      </p>
+    </section>
+
+    <!-- General astronomy learning cards -->
+    <section class="section" id="starterGuide">
+      <p class="eyebrow">YOUR CELESTIAL STARTER GUIDE</p>
+      <h2>What can you explore?</h2>
+
+      <p class="muted">
+        These are learning suggestions, not a live visibility
+        forecast. Actual visibility depends on location, date,
+        time and sky conditions.
+      </p>
+
+      <div class="cards objects">
+        <article class="card object-card">
+          <span class="object-icon">☾</span>
+          <h3>The Moon</h3>
+          <p>
+            Explore lunar phases and surface features.
+            Binoculars can help reveal more detail.
+          </p>
+        </article>
+
+        <article class="card object-card">
+          <span class="object-icon">✧</span>
+          <h3>Constellations</h3>
+          <p>
+            Learn to recognise star patterns and use them
+            to navigate the night sky.
+          </p>
+        </article>
+
+        <article class="card object-card">
+          <span class="object-icon">🪐</span>
+          <h3>Planets</h3>
+          <p>
+            Some planets look like bright stars. Check the
+            current sky information to plan your observations.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <footer>
+      <p>Made for curious minds and clear skies. ✦</p>
+    </footer>
+  </main>
+</body>
+</html>
